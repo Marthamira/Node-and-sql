@@ -8,20 +8,29 @@ const db = new sqlite3.Database('./db.sqlite');
 //     }
 // })
 // Retriving all rows
-db.all('SELECT * FROM AverageTemp', function(error, rows){
+// db.all('SELECT * FROM AverageTemp', function(error, rows){
+//     if(error){
+//         console.log(error)
+//         return;
+//     }
+//     console.log(rows)
+// });
+
+//Retriving single row
+// db.all('SELECT * FROM AverageTemp', (error, rows)=>{
+//     if(error){
+//         console.log(error)
+//         return;
+//     }
+//     console.log(rows.find(row=>row.id===1))
+
+// });
+
+db.get('SELECT * FROM AverageTemp WHERE year=2023', (error, rows)=>{
     if(error){
         console.log(error)
         return;
     }
     console.log(rows)
-});
-
-//Retriving single row
-db.all('SELECT * FROM AverageTemp', (error, rows)=>{
-    if(error){
-        console.log(error)
-        return;
-    }
-    console.log(rows.find(row=>row.id===1))
 
 });
