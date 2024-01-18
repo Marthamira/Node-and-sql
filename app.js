@@ -35,10 +35,18 @@ const db = new sqlite3.Database('./db.sqlite');
 
 // });
 
-db.each('SELECT * FROM AverageTemp WHERE year = 2023', (error, row)=>{
-    if(error){
+// db.each('SELECT * FROM AverageTemp WHERE year = 2023', (error, row)=>{
+//     if(error){
+//         console.log(error)
+//         return;
+//     }
+//     console.log(`${row.year} had a temperature of ${row.temperature} `)
+// })
+
+db.serialize((error) => {
+    db.run('DROP TABLE AverageTemp');
+    db.run('CREATE TABLE AverageTemp (id INTEGER PRIMARY KEY, year INTEGER NOT NULL, temperature REAL NOT NULL)', (error)=>console.log(error));
+    db.run('INSERT INTO AverageTemp (year, temperature) VALUES (2023, 28.6)', error=>{
         console.log(error)
-        return;
-    }
-    console.log(`${row.year} had a temperature of ${row.temperature} `)
-})
+    });
+  });
